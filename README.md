@@ -59,10 +59,20 @@ If you want to learn more about building native executables, please consult http
   of the extensions that depend on it.
 - Kotlin ([guide](https://quarkus.io/guides/kotlin)): Write your services in Kotlin
 
-## Provided Code
+## Install on Google Cloud Platform (GCP) using Cloud Run
 
-### REST
+Google Cloud Run allows you to run your Docker containers inside Google Cloud Platform in a managed way. (https://quarkus.io/guides/deploying-to-google-cloud)
 
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+- Install `gcloud` CLI: https://cloud.google.com/sdk/docs/install-sdk
+- Create a new project during `gcloud init`:  hello-quarkus-kotlin-gcp
+- if not logged-in (Check with `gcloud auth list`): `gcloud auth login` 
+- `cp src/main/docker/Dockerfile.jvm Dockerfile`
+-  `mvn clean package`
+- create [.gcloudignore](.gcloudignore);  test it with  `gcloud meta list-files-for-upload`
+- Set GCP project: `gcloud config set project hello-quarkus-kotlin-gcp`
+- (Make sure you have billing activated in the GCP for the new projects to avoid the "serviceusage.services.use" permission error in the next step)
+- Upload files and build the Docker image project `gcloud builds submit --tag gcr.io/hello-quarkus-kotlin-gcp/hello1`
+- Check if the image exists in the repository:  https://console.cloud.google.com/artifacts/docker/hello-quarkus-kotlin-gcp/us/gcr.io?project=hello-quarkus-kotlin-gcp
+- Lunch it on Cloud Run: `gcloud run deploy --image gcr.io/hello-quarkus-kotlin-gcp/hello1`
+- Finally, you get a Service URL and can use the app: https://hello1-r2cbzfff2q-ew.a.run.app
+- Running App can be managed in the GCP console: https://console.cloud.google.com/run?project=hello-quarkus-kotlin-gcp
