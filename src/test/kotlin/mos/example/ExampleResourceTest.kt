@@ -14,7 +14,7 @@ class ExampleResourceTest {
             .`when`().get("/")
             .then()
             .statusCode(200)
-            .body(`is`("Hello Quarkus, Kotlin and GCP. :)"))
+            .body(`is`("Hello Quarkus, Kotlin and GCP. :))"))
     }
 
 }

@@ -10,5 +10,5 @@ class ExampleResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    fun hello() = "Hello Quarkus, Kotlin and GCP. :)"
+    fun hello() = "Hello Quarkus, Kotlin and GCP. :))"
 }
