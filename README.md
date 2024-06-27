@@ -76,6 +76,7 @@ Google Cloud Run allows you to run your Docker containers inside Google Cloud Pl
 - Lunch it on Cloud Run: `gcloud run deploy --image gcr.io/hello-quarkus-kotlin-gcp/hello1`
 - Finally, you get a Service URL and can use the app: https://hello1-r2cbzfff2q-ew.a.run.app
 - Running App can be managed in the GCP console: https://console.cloud.google.com/run?project=hello-quarkus-kotlin-gcp
+- Set the default region (so that the same instance is used for  updates): `gcloud config set run/region XXXXeurope-west1`
 
 Deploying an update:
 - if not logged-in (Check with `gcloud auth list`): `gcloud auth login`
