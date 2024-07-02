@@ -1,5 +1,6 @@
 package mos.example
 
+import io.quarkus.hibernate.orm.panache.kotlin.PanacheQuery
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.Produces
@@ -13,5 +14,12 @@ class ExampleResource(
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    fun hello() = "Hello Quarkus ${quarkusFrameworkVersion}, Kotlin and GCP. :))"
+    fun hello(): String {
+        val all: List<MyDomain> = MyDomain.all().list()
+        return """Hello Quarkus ${quarkusFrameworkVersion}, Kotlin and GCP. :))
+            
+My database entries:
+  ${all.joinToString("\n  ") { it.name }}
+            """
+    }
 }
