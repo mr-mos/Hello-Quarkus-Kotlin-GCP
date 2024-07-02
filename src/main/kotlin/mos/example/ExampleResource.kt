@@ -1,6 +1,6 @@
 package mos.example
 
-import io.quarkus.hibernate.orm.panache.kotlin.PanacheQuery
+import io.quarkus.runtime.configuration.ConfigUtils
 import jakarta.transaction.Transactional
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
 import org.eclipse.microprofile.config.inject.ConfigProperty
 import java.net.URI
-import java.util.Date
+import java.util.*
 
 @Path("/")
 class ExampleResource(
@@ -29,7 +29,7 @@ My database entries:
  <a href="insert">Add a row to DB table</a> 
  
  <hr>
- <small> Locally, check the MySQL Dev Service for the used port: <a href="http://localhost:8080/q/dev-ui/dev-services">dev-services</a>. 
+ <small> ${if (ConfigUtils.getProfiles().contains("dev")) "Check the MySQL Dev Service for the used port: <a href='http://localhost:8080/q/dev-ui/dev-services'>dev-services</a>" else ""} 
  """
     }
 
