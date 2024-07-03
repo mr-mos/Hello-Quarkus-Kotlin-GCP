@@ -24,7 +24,7 @@ class ExampleResource(
         return """<pre>Hello Quarkus ${quarkusFrameworkVersion}, Kotlin and GCP. :))
             
 My database entries:
-  ${all.joinToString("\n  ") { it.name }}
+  ${all.joinToString("\n  ") { it.name.replace("<", "&lt;").replace(">", "&gt;") }}
    </pre>
  <a href="insert">Add a row to DB table</a> 
  
