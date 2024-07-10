@@ -83,6 +83,11 @@
             <artifactId>mysql-socket-factory-connector-j-8</artifactId>
             <version>1.19.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.googlecloudservices</groupId>
+            <artifactId>quarkus-google-cloud-secret-manager</artifactId>
+            <version>2.9.0</version>
+        </dependency>
     </dependencies>
 
     <build>
