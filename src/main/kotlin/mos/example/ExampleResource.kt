@@ -21,7 +21,9 @@ class ExampleResource(
     @Produces(MediaType.TEXT_HTML)
     fun hello(): String {
         val all: List<MyDomain> = MyDomain.all().list()
-        return """<pre>Hello Quarkus ${quarkusFrameworkVersion}, Kotlin and GCP. :))
+        return """<pre>Hello Quarkus ${quarkusFrameworkVersion}, Kotlin and GCP. :)) 
+* Server-Start: ${CustomQuarkusStart.getFormattedStartTimeServer()}
+* Build-Time: 
             
 My database entries:
   ${all.joinToString("\n  ") { it.name.replace("<", "&lt;").replace(">", "&gt;") }}
