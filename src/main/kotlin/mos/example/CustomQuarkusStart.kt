@@ -6,6 +6,7 @@ import io.quarkus.runtime.QuarkusApplication
 import io.quarkus.runtime.annotations.QuarkusMain
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.TimeZone
 
 
 @QuarkusMain
@@ -15,16 +16,24 @@ class CustomQuarkusStart {
 
         @JvmStatic
         fun main(args: Array<String>) {
+            setApplicationTimezone()
             Quarkus.run(MyApp::class.java, *args)
         }
 
         var startTimeServer: LocalDateTime? = null
 
-        fun getFormattedStartTimeServer() : String? {
+        fun getFormattedStartTimeServer(): String? {
             return startTimeServer?.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
         }
 
+        private fun setApplicationTimezone() {
+            TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
+        }
+
     }
+
+
+
 
     class MyApp : QuarkusApplication {
 
