@@ -8,6 +8,9 @@ import jakarta.ws.rs.Produces
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
 import org.eclipse.microprofile.config.inject.ConfigProperty
+import java.net.Inet4Address
+import java.net.InetAddress
+import java.net.NetworkInterface
 import java.net.URI
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -25,9 +28,11 @@ class ExampleResource(
     @Produces(MediaType.TEXT_HTML)
     fun hello(): String {
         val all: List<MyDomain> = MyDomain.all().list()
+        val localHost = InetAddress.getLocalHost()
         return """<pre>Hello Quarkus ${quarkusFrameworkVersion}, Kotlin and GCP. :)) 
 * Server-Start: ${CustomQuarkusStart.getFormattedStartTimeServer()}
 * Build-Time: ${convertMavenDate(applicationBuildTime)}
+* Servername(s): ${readAllHostIPAddresses().map{ "${it.hostAddress}(${it.hostName})" }.sorted().joinToString("; ")}
             
 My database entries:
   ${all.joinToString("\n  ") { it.name.replace("<", "&lt;").replace(">", "&gt;") }}
@@ -61,6 +66,14 @@ My database entries:
         val localDateTime = zonedDateTime.withZoneSameInstant(ZoneId.systemDefault())
         return localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
     }
+
+
+    private fun readAllHostIPAddresses(): List<Inet4Address> {
+        return NetworkInterface.getNetworkInterfaces().toList()
+            .flatMap { it.inetAddresses.toList() }
+            .filterIsInstance<Inet4Address>()
+    }
+
 
 
 }
