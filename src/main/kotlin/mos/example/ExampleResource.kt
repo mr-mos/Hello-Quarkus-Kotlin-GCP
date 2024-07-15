@@ -8,6 +8,7 @@ import jakarta.ws.rs.Produces
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
 import org.eclipse.microprofile.config.inject.ConfigProperty
+import java.lang.management.ManagementFactory
 import java.net.Inet4Address
 import java.net.InetAddress
 import java.net.NetworkInterface
@@ -28,10 +29,10 @@ class ExampleResource(
     @Produces(MediaType.TEXT_HTML)
     fun hello(): String {
         val all: List<MyDomain> = MyDomain.all().list()
-        val localHost = InetAddress.getLocalHost()
         return """<pre>Hello Quarkus ${quarkusFrameworkVersion}, Kotlin and GCP. :)) 
 * Server-Start: ${CustomQuarkusStart.getFormattedStartTimeServer()}
 * Build-Time: ${convertMavenDate(applicationBuildTime)}
+* Process: ${ManagementFactory.getRuntimeMXBean().name}
 * Servername(s): ${readAllHostIPAddresses().map{ "${it.hostAddress}(${it.hostName})" }.sorted().joinToString("; ")}
             
 My database entries:
