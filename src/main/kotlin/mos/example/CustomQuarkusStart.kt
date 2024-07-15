@@ -23,7 +23,7 @@ class CustomQuarkusStart {
         var startTimeServer: LocalDateTime? = null
 
         fun getFormattedStartTimeServer(): String? {
-            return startTimeServer?.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+            return startTimeServer?.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))
         }
 
         private fun setApplicationTimezone() {
