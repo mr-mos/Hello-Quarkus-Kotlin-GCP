@@ -1,5 +1,6 @@
 package mos.example
 
+import com.google.cloud.MetadataConfig
 import io.quarkus.runtime.configuration.ConfigUtils
 import jakarta.transaction.Transactional
 import jakarta.ws.rs.GET
@@ -34,6 +35,7 @@ class ExampleResource(
 * Build-Time: ${convertMavenDate(applicationBuildTime)}
 * Process: ${ManagementFactory.getRuntimeMXBean().name}
 * Servername(s): ${readAllHostIPAddresses().map{ "${it.hostAddress}(${it.hostName})" }.sorted().joinToString("; ")}
+* GCP Instance-ID: ${MetadataConfig.getInstanceId()}
             
 My database entries:
   ${all.joinToString("\n  ") { it.name.replace("<", "&lt;").replace(">", "&gt;") }}
