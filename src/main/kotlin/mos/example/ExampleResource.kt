@@ -1,7 +1,9 @@
 package mos.example
 
 import com.google.cloud.MetadataConfig
+import io.quarkus.runtime.LaunchMode
 import io.quarkus.runtime.configuration.ConfigUtils
+import jakarta.inject.Inject
 import jakarta.transaction.Transactional
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
@@ -11,7 +13,6 @@ import jakarta.ws.rs.core.Response
 import org.eclipse.microprofile.config.inject.ConfigProperty
 import java.lang.management.ManagementFactory
 import java.net.Inet4Address
-import java.net.InetAddress
 import java.net.NetworkInterface
 import java.net.URI
 import java.time.ZoneId
@@ -22,7 +23,8 @@ import java.util.*
 @Path("/")
 class ExampleResource(
     @ConfigProperty(name = "mos.used.version") val quarkusFrameworkVersion: String,
-    @ConfigProperty(name = "mos.build.timestamp") val applicationBuildTime: String
+    @ConfigProperty(name = "mos.build.timestamp") val applicationBuildTime: String,
+    val mode: LaunchMode
 ) {
 
 
@@ -30,11 +32,12 @@ class ExampleResource(
     @Produces(MediaType.TEXT_HTML)
     fun hello(): String {
         val all: List<MyDomain> = MyDomain.all().list()
-        return """<pre>Hello Quarkus ${quarkusFrameworkVersion}, Kotlin and GCP. :)) 
+        return """<pre>Hello Quarkus ${quarkusFrameworkVersion} Kotlin and GCP. :)) 
 * Server-Start: ${CustomQuarkusStart.getFormattedStartTimeServer()}
 * Build-Time: ${convertMavenDate(applicationBuildTime)}
+* LaunchMode: ${mode.name}
 * Process: ${ManagementFactory.getRuntimeMXBean().name}
-* Servername(s): ${readAllHostIPAddresses().map{ "${it.hostAddress}(${it.hostName})" }.sorted().joinToString("; ")}
+* Servername(s): ${readAllHostIPAddresses().map{ "${it.hostAddress}(${it.hostName})" }.sorted().joinToString("; ")}   (!! Takes long at runtime)
 * GCP Instance-ID: ${MetadataConfig.getInstanceId()}
             
 My database entries:
