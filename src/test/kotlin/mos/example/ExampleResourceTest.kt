@@ -19,7 +19,7 @@ class ExampleResourceTest  {
             .`when`().get("/")
             .then()
             .statusCode(200)
-            .body(containsString("Hello Quarkus ${quarkusFrameworkVersion?:"NO VERSION"}, Kotlin and GCP. :))"))
+            .body(containsString("Hello Quarkus ${quarkusFrameworkVersion?:"NO VERSION"} Kotlin and GCP. :))"))
     }
 
 }

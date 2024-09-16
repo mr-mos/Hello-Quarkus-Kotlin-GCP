@@ -18,6 +18,7 @@ import java.net.URI
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 
 @Path("/")
@@ -68,9 +69,15 @@ My database entries:
      */
     private fun convertMavenDate(timestamp: String): String {
         val formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
-        val zonedDateTime = ZonedDateTime.parse(timestamp, formatter)
-        val localDateTime = zonedDateTime.withZoneSameInstant(ZoneId.systemDefault())
-        return localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+        return try {
+            val zonedDateTime = ZonedDateTime.parse(timestamp, formatter)
+            val localDateTime = zonedDateTime.withZoneSameInstant(ZoneId.systemDefault())
+            localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+        } catch (e: DateTimeParseException) {
+            println("Failed to parse timestamp: ${e.message}")
+            "Parse-Error"
+        }
+
     }
 
 
